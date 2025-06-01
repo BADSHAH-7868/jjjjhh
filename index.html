@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Click the Circle Game</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .game-container {
+      text-align: center;
+      color: #fff;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+    }
+
+    .score {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .circle {
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle, #ff9a9e, #fad0c4);
+      border-radius: 50%;
+      position: absolute;
+      cursor: pointer;
+      transition: 0.1s ease;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    }
+
+    .start-btn {
+      padding: 12px 24px;
+      background: #fff;
+      color: #333;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .start-btn:hover {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>🎯 Click the Circle!</h1>
+    <div class="score">Score: <span id="score">0</span></div>
+    <button class="start-btn" onclick="startGame()">Start Game</button>
+  </div>
+
+  <div id="circle" class="circle" onclick="clickCircle()" style="display: none;"></div>
+
+  <script>
+    const circle = document.getElementById("circle");
+    const scoreDisplay = document.getElementById("score");
+    let score = 0;
+    let gameInterval;
+
+    function getRandomPosition() {
+      const x = Math.floor(Math.random() * (window.innerWidth - 100));
+      const y = Math.floor(Math.random() * (window.innerHeight - 100));
+      return { x, y };
+    }
+
+    function moveCircle() {
+      const { x, y } = getRandomPosition();
+      circle.style.left = x + "px";
+      circle.style.top = y + "px";
+    }
+
+    function clickCircle() {
+      score++;
+      scoreDisplay.textContent = score;
+      moveCircle();
+    }
+
+    function startGame() {
+      score = 0;
+      scoreDisplay.textContent = score;
+      circle.style.display = "block";
+      moveCircle();
+      clearInterval(gameInterval);
+      gameInterval = setInterval(moveCircle, 1000); // Move every second
+    }
+  </script>
+</body>
+</html>
+
+
